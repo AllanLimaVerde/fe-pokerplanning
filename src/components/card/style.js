@@ -14,7 +14,3 @@ export const CardContainer = styled.div`
   cursor: pointer;
   transition: transform 100ms ease-in;
 }`
-
-// .CardContainer:hover {
-//   transform: scale(1.03);
-// }
