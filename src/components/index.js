@@ -7,6 +7,7 @@ import { PlayerAvatar } from './playerAvatar'
 import { ReplayButton } from './replayButton'
 import { Countdown } from './countdown'
 import { ResetServerButton } from './resetServerButton'
+import { Text } from './text'
 
 export {
   Card,
@@ -17,5 +18,6 @@ export {
   PlayerAvatar,
   ReplayButton,
   Countdown,
-  ResetServerButton
+  ResetServerButton,
+  Text
 }

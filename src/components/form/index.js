@@ -4,6 +4,8 @@ import { updateRoom } from '../../services/api'
 import { history } from '../../navigation/history'
 import { useContext } from 'react'
 import { Context } from '../../context'
+import { actions } from '../../constants'
+import { Text } from '../'
 import './style.css'
 
 export const Form = () => {
@@ -12,13 +14,14 @@ export const Form = () => {
   const roomNameRef = useRef()
   const userNameRef = useRef()
 
-  let [roomNameInput, setRoomNameInput] = useState('')
-  let [userNameInput, setUserNameInput] = useState('')
+  const [roomNameInput, setRoomNameInput] = useState('')
+  const [userNameInput, setUserNameInput] = useState('')
+  const [usernameConflict, setUsernameConflict] = useState(null)
+
 
   const handleSubmit = async e => {
     e.preventDefault()
-
-    // if (!roomNameInput || !userNameInput) return
+    setUsernameConflict(false)
 
     const newUserName = userNameInput || 'Anônimo'
     
@@ -32,15 +35,13 @@ export const Form = () => {
 
     if (!data) return
 
-    const { room, alteredUserName } = data
+    const { room, SSEaction } = data
 
-    const playersWithSameName = room.players.find(player => player.userName === newUserName)
-
-    if (Array.isArray(playersWithSameName)) {
-      return console.log(`Ja existe um usuario com esse nome nessa sala. Favor escolher um nome diferente`)
+    if (SSEaction === actions.sse.playerNameConflict) {
+      return setUsernameConflict(`Username '${newUserName}' já está em uso`)
     }
 
-    setUserName(alteredUserName || newUserName)
+    setUserName(newUserName)
     setRoomName(room.name)
     setRoom(data)
 
@@ -49,10 +50,13 @@ export const Form = () => {
   }
   
   return (
-    <div className="FormContainer">
-      <input ref={roomNameRef} className='input' onChange={(e) => {e.target.value = e.target.value.toLocaleLowerCase(); setRoomNameInput(e.target.value)}} placeholder={'nome da sala'}></input>
-      <input ref={userNameRef} className='input' onChange={(e) => {e.target.value = e.target.value.toLocaleLowerCase(); setUserNameInput(e.target.value)}} placeholder={'seu nome'}></input>
-      <Button text={'Entrar'} onClick={e => handleSubmit(e)}/>
-    </div>
+    <>
+      <div className="FormContainer">
+        <input ref={roomNameRef} className='input' onChange={(e) => {e.target.value = e.target.value.toLocaleLowerCase(); setRoomNameInput(e.target.value)}} placeholder={'nome da sala'}></input>
+        <input ref={userNameRef} className='input' onChange={(e) => {e.target.value = e.target.value.toLocaleLowerCase(); setUserNameInput(e.target.value)}} placeholder={'seu nome'}></input>
+        <Button text={'Entrar'} onClick={e => handleSubmit(e)}/>
+      </div>
+      {usernameConflict && <Text text={usernameConflict}/>}
+    </>
   )
 }

@@ -1,0 +1,10 @@
+
+
+.Text {
+  color: white;
+  font-size: 21px;
+  position: absolute;
+  bottom: 21%;
+  text-decoration: underline;
+  cursor: default;
+}

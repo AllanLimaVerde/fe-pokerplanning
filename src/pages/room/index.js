@@ -123,7 +123,7 @@ function Room() {
         {countdown && countdown > 0 && <Countdown value={countdown} />}
         <ReplayButton isReveal={isRevealTime} onClick={handleReplayClick} />
         <AvatarsContainer>
-          {room && room.room && room.room.players && room.room.players.length && room.room.players.map(player => {
+          {room && room.room && room.room.players && room.room.players.map(player => {
             if (player.userName === userName) {
               return null
             }

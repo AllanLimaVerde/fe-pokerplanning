@@ -3,4 +3,5 @@
 .Headline {
   color: white;
   font-size: 24px;
+  cursor: default;
 }

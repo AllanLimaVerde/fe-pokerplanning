@@ -1,4 +1,4 @@
-const environment = 'production'
+const environment = 'local'
 
 const urls = {
   local: 'http://localhost:5000',
@@ -12,7 +12,14 @@ const roomStatuses = {
   reveal: 'reveal'
 }
 
+const actions = {
+  sse: {
+    playerNameConflict: 'playerNameConflict'
+  }
+}
+
 export {
   ROOT_URL,
-  roomStatuses
+  roomStatuses,
+  actions
 }
