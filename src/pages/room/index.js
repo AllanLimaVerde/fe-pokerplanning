@@ -40,8 +40,6 @@ function Room() {
   const fibonacci = getFibonacciNumbers(6)
   fibonacci.push('?')
 
-  console.log(fibonacci)
-
   const createInterval = () => {
     pollingInterval.current = setInterval(async () => {
       const action = { description: 'checkRoomForChange', payload: room }
