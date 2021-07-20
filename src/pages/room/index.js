@@ -115,8 +115,6 @@ function Room() {
     createInterval()
   }
 
-  console.log(room)
-
   return (
     <App>
       <AppHeader>

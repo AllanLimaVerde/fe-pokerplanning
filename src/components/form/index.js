@@ -17,10 +17,12 @@ export const Form = () => {
 
   const handleSubmit = async e => {
     e.preventDefault()
+
+    const newUserName = userNameInput || 'Anônimo'
     
     const data = await updateRoom({ 
       roomName: roomNameInput,
-      userName: userNameInput || 'Anônimo',
+      userName: newUserName,
       action: {
         description: 'joinOrCreateRoom'
       }
@@ -28,8 +30,10 @@ export const Form = () => {
 
     if (!data) return
 
-    setUserName(userNameInput)
-    setRoomName(data.room.name)
+    const { room, alteredUserName } = data
+
+    setUserName(alteredUserName || newUserName)
+    setRoomName(room.name)
     setRoom(data)
 
     history.push(`/${data.room.name}`)
