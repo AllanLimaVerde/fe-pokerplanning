@@ -1,0 +1,12 @@
+
+
+.TableContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: aliceblue;
+  color: black;
+  width: 24vw;
+  height: 18vh;
+  border-radius: 15%;
+}

@@ -1,0 +1,10 @@
+.ResetServerButton {
+  position: absolute;
+  bottom: 3%;
+  right: 3%;
+  color: white;
+  font-size: 18px;
+  text-decoration: underline;
+  opacity: 0.3;
+  cursor: pointer;
+}
