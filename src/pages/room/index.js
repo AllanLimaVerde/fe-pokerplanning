@@ -115,9 +115,12 @@ function Room() {
     createInterval()
   }
 
+  console.log(room)
+
   return (
     <App>
       <AppHeader>
+        {(!room || room.room.players.length === 1) && <div>Sala vazia :|</div>}
         {countdown && countdown > 0 && <Countdown value={countdown} />}
         <ReplayButton isReveal={isRevealTime} onClick={handleReplayClick} />
         <AvatarsContainer>
