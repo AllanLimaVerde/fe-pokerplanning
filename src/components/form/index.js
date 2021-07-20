@@ -18,7 +18,7 @@ export const Form = () => {
   const handleSubmit = async e => {
     e.preventDefault()
 
-    if (!roomNameInput || !userNameInput) return
+    // if (!roomNameInput || !userNameInput) return
 
     const newUserName = userNameInput || 'Anônimo'
     
@@ -34,13 +34,11 @@ export const Form = () => {
 
     const { room, alteredUserName } = data
 
-    // const playersWithSameName = room.players.find(player => player.userName === newUserName)
+    const playersWithSameName = room.players.find(player => player.userName === newUserName)
 
-    // console.log('playersWithSameName.length', playersWithSameName)
-
-    // if (playersWithSameName.length > 1) {
-    //   return console.log(`Ja existe um usuario com esse nome nessa sala. Favor escolher um nome diferente`)
-    // }
+    if (playersWithSameName.length > 1) {
+      return console.log(`Ja existe um usuario com esse nome nessa sala. Favor escolher um nome diferente`)
+    }
 
     setUserName(alteredUserName || newUserName)
     setRoomName(room.name)
