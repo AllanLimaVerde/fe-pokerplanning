@@ -1,8 +1,14 @@
-const ROOT_URL = 'http://localhost:5000'
+const environment = 'production'
+
+const urls = {
+  local: 'http://localhost:5000',
+  production: 'https://pokerplanning-da-galera.herokuapp.com'
+}
+
+const ROOT_URL = urls[environment]
 
 const roomStatuses = {
   waiting: 'waiting',
-  // countdown: 'countdown',
   reveal: 'reveal'
 }
 
