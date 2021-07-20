@@ -18,6 +18,8 @@ export const Form = () => {
   const handleSubmit = async e => {
     e.preventDefault()
 
+    if (!roomNameInput || !userNameInput) return
+
     const newUserName = userNameInput || 'Anônimo'
     
     const data = await updateRoom({ 
@@ -32,6 +34,14 @@ export const Form = () => {
 
     const { room, alteredUserName } = data
 
+    // const playersWithSameName = room.players.find(player => player.userName === newUserName)
+
+    // console.log('playersWithSameName.length', playersWithSameName)
+
+    // if (playersWithSameName.length > 1) {
+    //   return console.log(`Ja existe um usuario com esse nome nessa sala. Favor escolher um nome diferente`)
+    // }
+
     setUserName(alteredUserName || newUserName)
     setRoomName(room.name)
     setRoom(data)
@@ -42,8 +52,8 @@ export const Form = () => {
   
   return (
     <div className="FormContainer">
-      <input ref={roomNameRef} className='input' onChange={(e) => setRoomNameInput(e.target.value)} placeholder={'nome da sala'}></input>
-      <input ref={userNameRef} className='input' onChange={(e) => setUserNameInput(e.target.value)} placeholder={'seu nome'}></input>
+      <input ref={roomNameRef} className='input' onChange={(e) => {e.target.value = e.target.value.toLocaleLowerCase(); setRoomNameInput(e.target.value)}} placeholder={'nome da sala'}></input>
+      <input ref={userNameRef} className='input' onChange={(e) => {e.target.value = e.target.value.toLocaleLowerCase(); setUserNameInput(e.target.value)}} placeholder={'seu nome'}></input>
       <Button text={'Entrar'} onClick={e => handleSubmit(e)}/>
     </div>
   )
