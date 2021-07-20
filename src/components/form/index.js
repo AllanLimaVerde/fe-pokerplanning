@@ -36,7 +36,7 @@ export const Form = () => {
 
     const playersWithSameName = room.players.find(player => player.userName === newUserName)
 
-    if (playersWithSameName.length > 1) {
+    if (Object.keys(playersWithSameName).length > 1) {
       return console.log(`Ja existe um usuario com esse nome nessa sala. Favor escolher um nome diferente`)
     }
 
