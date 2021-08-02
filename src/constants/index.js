@@ -1,26 +1,26 @@
 const environment = 'production'
 
-const urls = {
+const httpUrls = {
   local: 'http://localhost:5000',
   production: 'https://pokerplanning-da-galera.herokuapp.com'
 }
 
-const ROOT_URL = urls[environment]
+const wsUrls = {
+  local: 'ws://localhost:5000',
+  production: 'wss://pokerplanning-da-galera.herokuapp.com'
+}
+
+const ROOT_URL = httpUrls[environment]
+const WS_URL = wsUrls[environment]
 
 const roomStatuses = {
   waiting: 'waiting',
   reveal: 'reveal'
 }
 
-const actions = {
-  sse: {
-    playerNameConflict: 'playerNameConflict'
-  }
-}
-
 export {
   ROOT_URL,
+  WS_URL,
   roomStatuses,
-  actions,
   environment
 }

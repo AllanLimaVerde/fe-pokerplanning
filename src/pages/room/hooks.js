@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState, useContext } from 'react'
+import { useRef, useState, useContext } from 'react'
 import { Context } from '../../context'
 import { getFibonacciNumbers } from '../../services'
-import { roomStatuses, ROOT_URL, environment } from '../../constants'
+import { WS_URL } from '../../constants'
 
 const useRoom = () => {
   const { userName, playerId, setPlayerId, roomName, room, setRoom } = useContext(Context)
@@ -13,20 +13,15 @@ const useRoom = () => {
 
   let countdownInterval = useRef(null)
 
-  let connecting = false
-
   const handleSocketChange = () => {
     if (!socket) return connect()
 
     socket.addEventListener('open', function(event) {
-      console.log('socket', 'open')
       setConnected(true)
-      const enterData = { type: 'playerEnteringRoom', data: { userName, playerId, roomName } }
-      send(enterData)
+      send({ type: 'playerEnteringRoom', data: { userName, playerId, roomName } })
     })
   
     socket.addEventListener('close', function(event) {
-      console.log('socket', 'close')
       setConnected(false)
     })
   
@@ -34,55 +29,29 @@ const useRoom = () => {
       const { data: message } = event
       const data = JSON.parse(message)
   
-      console.log('socket', 'message', data)
-  
       const { type, data: _data } = data
   
       switch (type) {
-        case 'enter': {
-          console.log('Received enter message')
-          break
-        }
-        case 'vote': {
-          console.log('Received vote message')
-          break
-        }
-        case 'playAgain': {
-          console.log('Received playAgain message')
-          break
-        }
         case 'newPlayerInRoom': {
-          console.log('Received newPlayerInRoom message')
           setRoom(_data.room)
-          console.log('updated room line 91')
-          console.log(room)
           break
         }
         case 'setPlayerId': {
-          console.log('Received setPlayerId message')
           const { playerId } = _data
           setPlayerId(playerId)
           localStorage.setItem('playerId', playerId)
           break
         }
         case 'updateRoom': {
-          console.log('Received updateRoom message')
-          console.log(_data)
           setRoom({ room: _data })
-          console.log('updated room line 104')
-          console.log(room)
           break
         }
         case 'revealTime': {
-          console.log('Received revealTime message')
-          // setIsRevealTime(true)
           countdownSetup()
           break
         }
         default: {
           setRoom(_data.room)
-          console.log('updated room line 110')
-          console.log(_data.room)
           break
         }
       }
@@ -94,9 +63,6 @@ const useRoom = () => {
   }
 
   const send = (data) => {
-    // if (!connected) {
-    //   throw new Error('WebSocket is not connected')
-    // }
     const value = JSON.stringify(data)
     socket.send(value)
   }
@@ -105,20 +71,8 @@ const useRoom = () => {
     return localStorage.getItem('playerId') || null
   }
 
-  const connect = () => {
-    connecting = true
-  
-    const url = {
-      local: `ws://localhost:5000`,
-      production: `wss://pokerplanning-da-galera.herokuapp.com`
-    }
-    
-    setSocket(new WebSocket(url[environment]))
-  }
-  
-  function disconnect() {
-    socket.close()
-    setSocket(null)
+  const connect = () => {    
+    setSocket(new WebSocket(WS_URL))
   }
 
   const handleCardClick = async ({ e, number }) => {
@@ -127,16 +81,10 @@ const useRoom = () => {
     const selectedNumber = number === selectedCard ? null : number
     setSelectedCard(selectedNumber)
 
-    console.log('Room b4 logic:')
-    console.log(room)
-
     setRoom(room => {
-      console.log(room)
       room.room.players[playerId].currentVote = selectedNumber
       return room
     })
-    console.log('updated room line 122')
-    console.log(room)
 
     const sendData = { type: 'vote', data: { playerId, selectedNumber, roomName } }
     send(sendData)
@@ -163,12 +111,7 @@ const useRoom = () => {
     e.preventDefault()
 
     if (!isRevealTime) return
-
-    // const action = { description: 'resetRoomForNewVote' }
-    // const updatedRoom = await updateRoom({ roomName, userName, action })
-    // setRoom(updatedRoom)
-    // console.log('updated room line 181')
-    // console.log(room)
+    
     send({ type: 'playAgain', data: { roomName } })
     setSelectedCard(null)
     setIsRevealTime(false)

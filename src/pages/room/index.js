@@ -1,35 +1,24 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { Card, PlayerAvatar, ReplayButton, Countdown } from '../../components'
-import { updateRoom } from '../../services/api'
-import { useContext, useState } from 'react'
-import { Context } from '../../context'
-import { getFibonacciNumbers } from '../../services'
 import { App, AppHeader, CardsContainer, AvatarsContainer } from './style'
-import { roomStatuses, ROOT_URL, environment } from '../../constants'
+import { roomStatuses } from '../../constants'
 import useRoom from './hooks'
 
 const Room = () => {
   const {
-    userName,
     playerId,
     setPlayerId,
-    roomName,
     room,
-    setRoom,
     selectedCard, 
     setSelectedCard,
     countdown, 
     setCountdown,
     isRevealTime, 
     setIsRevealTime,
-    connected, 
-    setConnected,
     socket, 
-    setSocket,
     fibonacci,
     getPlayerId,
     connect,
-    send,
     countdownSetup,
     countdownInterval,
     handleReplayClick,
@@ -47,7 +36,6 @@ const Room = () => {
   }, [socket])
 
   useEffect(() => {
-    console.log('ROOM HAS BEEN UPDATED', room)
     if (room && room.room && room.room.status === roomStatuses.reveal && !countdown && !isRevealTime) {
       countdownSetup()
     }
@@ -56,12 +44,6 @@ const Room = () => {
     setIsRevealTime(false)
     setSelectedCard(null)
     }
-
-    // if (!room) {
-    //   // const sendData = { type: 'getRoom', data: { playerId, roomName } }
-    //   // send(sendData)
-    //   connect()
-    // }
   }, [room])
 
   useEffect(() => {
