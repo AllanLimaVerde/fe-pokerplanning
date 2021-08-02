@@ -1,4 +1,4 @@
-const environment = 'local'
+const environment = 'production'
 
 const urls = {
   local: 'http://localhost:5000',
