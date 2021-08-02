@@ -1,5 +1,5 @@
 import './lobby.css'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form, Headline, ResetServerButton } from '../../components'
 import { updateRoom } from '../../services/api'
 
@@ -12,14 +12,20 @@ function Lobby() {
 
     try {
       const data = await updateRoom({ action })
-
-      if (data.status === 200) {
-        return setResetText(data.message)
-      }
-    } catch (_) { }
+      return setResetText(data.message)
+    } catch (err) {
+      console.log(err)
+    }
 
     setResetText(`Houve algum problema :(`)
   }
+
+  useEffect(() => {
+    const playerId = localStorage.getItem('playerId')
+    const action = { description: 'playerOnLobby', payload: { playerId } }
+    console.log(action)
+    updateRoom({ action })
+  }, [])
 
   return (
     <div className="App">

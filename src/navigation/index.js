@@ -6,12 +6,13 @@ import { Context } from '../context'
 
 export const Navigation = () => {
   const [userName, setUserName] = useState('')
+  const [playerId, setPlayerId] = useState('')
   const [roomName, setRoomName] = useState('')
   const [room, setRoom] = useState(null)
 
   return (
     <Router history={history}>
-      <Context.Provider value={{ userName, setUserName, roomName, setRoomName, room, setRoom }}>
+      <Context.Provider value={{ userName, setUserName, playerId, setPlayerId, roomName, setRoomName, room, setRoom }}>
         <Switch>
           <Route exact path='/'>
             <Lobby />

@@ -1,4 +1,4 @@
-const environment = 'production'
+const environment = 'local'
 
 const urls = {
   local: 'http://localhost:5000',
@@ -21,5 +21,6 @@ const actions = {
 export {
   ROOT_URL,
   roomStatuses,
-  actions
+  actions,
+  environment
 }
