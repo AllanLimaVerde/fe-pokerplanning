@@ -5,6 +5,7 @@ import { WS_URL } from '../../constants'
 
 const useRoom = () => {
   const { userName, playerId, setPlayerId, roomName, room, setRoom } = useContext(Context)
+  const [isThereAnotherPlayerInRoom, setIsThereAnotherPlayerInRoom] = useState(false)
   const [selectedCard, setSelectedCard] = useState(null)
   const [countdown, setCountdown] = useState(null)
   const [isRevealTime, setIsRevealTime] = useState(false)
@@ -142,7 +143,9 @@ const useRoom = () => {
     countdownInterval,
     handleReplayClick,
     handleCardClick,
-    handleSocketChange
+    handleSocketChange,
+    isThereAnotherPlayerInRoom,
+    setIsThereAnotherPlayerInRoom
   })
 }
 

@@ -12,5 +12,6 @@ export const CardContainer = styled.div`
   margin: 6px;
   font-size: 48px;
   cursor: pointer;
+  user-select: none;
   transition: transform 100ms ease-in;
 }`

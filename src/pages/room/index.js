@@ -23,7 +23,9 @@ const Room = () => {
     countdownInterval,
     handleReplayClick,
     handleCardClick,
-    handleSocketChange
+    handleSocketChange,
+    isThereAnotherPlayerInRoom,
+    setIsThereAnotherPlayerInRoom
   } = useRoom()
   
   useEffect(() => {
@@ -38,6 +40,15 @@ const Room = () => {
   }, [socket])
 
   useEffect(() => {
+    const playerId = getPlayerId()
+    if (room && room.room) {
+      if (Object.keys(room.room.players).find(playerKey => playerKey != playerId)) {
+        return setIsThereAnotherPlayerInRoom(true)
+      }
+
+      setIsThereAnotherPlayerInRoom(false)
+    }
+
     if (room && room.room && room.room.status === roomStatuses.reveal && !countdown && !isRevealTime) {
       countdownSetup()
     }
@@ -46,14 +57,15 @@ const Room = () => {
     setIsRevealTime(false)
     setSelectedCard(null)
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [room])
 
   useEffect(() => {
     if (countdown && countdown < 1) {
+      setCountdown(null)
       clearInterval(countdownInterval.current)
       countdownInterval.current = null
-      setCountdown(null)
       setIsRevealTime(true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -62,7 +74,7 @@ const Room = () => {
   return (
     <App>
       <AppHeader>
-        {(!room || !room.room || Object.keys(room.players || room.room.players).length <= 1) && <div>Sala vazia :|</div>}
+        {(!room || !room.room || !isThereAnotherPlayerInRoom) && <div>Sala vazia :|</div>}
         {countdown && countdown > 0 && <Countdown value={countdown} />}
         <ReplayButton isReveal={isRevealTime} onClick={handleReplayClick} />
         <AvatarsContainer>
