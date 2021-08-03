@@ -1,7 +1,7 @@
 import './lobby.css'
 import React, { useState, useEffect } from 'react'
 import { Form, Headline, ResetServerButton } from '../../components'
-import { updateRoom } from '../../services/api'
+import { updateRoom as sendActionToServer } from '../../services/api'
 
 function Lobby() {
   const [resetText, setResetText] = useState(`resetar servidor`)
@@ -12,7 +12,7 @@ function Lobby() {
     const errorText = `Houve algum problema :(`
 
     try {
-      const data = await updateRoom({ action })
+      const data = await sendActionToServer({ action })
       return setResetText(data.message)
     } catch (err) {
       console.log(errorText, err)
@@ -24,7 +24,7 @@ function Lobby() {
   useEffect(() => {
     const playerId = localStorage.getItem('playerId')
     const action = { description: 'playerOnLobby', payload: { playerId } }
-    updateRoom({ action })
+    sendActionToServer({ action })
   }, [])
 
   return (
