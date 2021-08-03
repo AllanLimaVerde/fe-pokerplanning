@@ -45,7 +45,6 @@ const Room = () => {
       if (Object.keys(room.room.players).find(playerKey => playerKey != playerId)) {
         return setIsThereAnotherPlayerInRoom(true)
       }
-
       setIsThereAnotherPlayerInRoom(false)
     }
 
