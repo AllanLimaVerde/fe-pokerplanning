@@ -79,8 +79,8 @@ const Room = () => {
         {room && room.room && room.room.players &&
           Object.keys(room.room.players)
           .filter(_playerId => _playerId !== playerId)
-          .map(playerKey => {
-            const player = room.room.players[playerKey];
+          .map(_playerId => {
+            const player = room.room.players[_playerId];
             return (
               <PlayerAvatar key={player.userName} userName={player.userName} currentVote={player.currentVote} isReveal={isRevealTime} />
               ) 
