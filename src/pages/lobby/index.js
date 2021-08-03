@@ -9,21 +9,21 @@ function Lobby() {
   const handleServerResetClick = async e => {
     e.preventDefault()
     const action = { description: 'resetServer' }
+    const errorText = `Houve algum problema :(`
 
     try {
       const data = await updateRoom({ action })
       return setResetText(data.message)
     } catch (err) {
-      console.log(err)
+      console.log(errorText, err)
     }
 
-    setResetText(`Houve algum problema :(`)
+    setResetText(errorText)
   }
 
   useEffect(() => {
     const playerId = localStorage.getItem('playerId')
     const action = { description: 'playerOnLobby', payload: { playerId } }
-    console.log(action)
     updateRoom({ action })
   }, [])
 
