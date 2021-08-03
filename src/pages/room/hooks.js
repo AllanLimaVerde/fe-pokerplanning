@@ -37,6 +37,13 @@ const useRoom = () => {
           setRoom(_data.room)
           break
         }
+        case 'resetRoomForNewVote': {
+          setSelectedCard(null)
+          setCountdown(null)
+          setIsRevealTime(false)
+          setRoom({room: _data.room })
+          break
+        }
         case 'setPlayerId': {
           const { playerId } = _data
           setPlayerId(playerId)
@@ -65,7 +72,12 @@ const useRoom = () => {
 
   const send = (data) => {
     const value = JSON.stringify(data)
-    socket.send(value)
+
+    try {
+      socket.send(value)
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   const getPlayerId = () => {
@@ -83,7 +95,9 @@ const useRoom = () => {
     setSelectedCard(selectedNumber)
 
     setRoom(room => {
-      room.room.players[playerId].currentVote = selectedNumber
+      try {
+        room.room.players[playerId].currentVote = selectedNumber
+      } catch (_) { }
       return room
     })
 

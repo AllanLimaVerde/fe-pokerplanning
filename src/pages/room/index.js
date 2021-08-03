@@ -62,7 +62,7 @@ const Room = () => {
   }, [room])
 
   useEffect(() => {
-    if (countdown && countdown < 1) {
+    if (countdown < 1) {
       setCountdown(null)
       clearInterval(countdownInterval.current)
       countdownInterval.current = null
@@ -75,7 +75,7 @@ const Room = () => {
     <App>
       <AppHeader>
         {(!room || !room.room || !isThereAnotherPlayerInRoom) && <div>Sala vazia :|</div>}
-        {countdown && countdown > 0 && <Countdown value={countdown} />}
+        {countdown > 0 && <Countdown value={countdown} />}
         <ReplayButton isReveal={isRevealTime} onClick={handleReplayClick} />
         <AvatarsContainer>
         {room && room.room && room.room.players &&
