@@ -29,10 +29,12 @@ const Room = () => {
   useEffect(() => {
     setPlayerId(getPlayerId())
     connect()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
     handleSocketChange()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket])
 
   useEffect(() => {
@@ -44,15 +46,17 @@ const Room = () => {
     setIsRevealTime(false)
     setSelectedCard(null)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [room])
 
   useEffect(() => {
-    if (countdown < 1) {
+    if (countdown && countdown < 1) {
       clearInterval(countdownInterval.current)
       countdownInterval.current = null
       setCountdown(null)
       setIsRevealTime(true)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countdown])
 
   return (
@@ -60,9 +64,9 @@ const Room = () => {
       <AppHeader>
         {(!room || !room.room || Object.keys(room.players || room.room.players).length <= 1) && <div>Sala vazia :|</div>}
         {countdown && countdown > 0 && <Countdown value={countdown} />}
-        {isRevealTime && <ReplayButton isReveal={isRevealTime} onClick={handleReplayClick} />}
+        <ReplayButton isReveal={isRevealTime} onClick={handleReplayClick} />
         <AvatarsContainer>
-        {room && room.room && room.room.players && 
+        {room && room.room && room.room.players &&
           Object.keys(room.room.players)
           .filter(_playerId => _playerId !== playerId)
           .map(playerKey => {

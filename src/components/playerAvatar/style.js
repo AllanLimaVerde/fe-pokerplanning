@@ -28,5 +28,6 @@ export const CurrentPlayerVote = styled.div`
   border-radius: 15%;
   margin: 6px;
   font-size: 48px;
-  transition: transform 100ms ease-in;
+  transition: color 150ms ease-in;
+  user-select: none;
 `
