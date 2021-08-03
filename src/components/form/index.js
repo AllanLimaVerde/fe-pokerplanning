@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { Button } from '../'
-import { updateRoom } from '../../services/api'
+import { updateRoom as sendActionToServer } from '../../services/api'
 import { history } from '../../navigation/history'
 import { useContext } from 'react'
 import { Context } from '../../context'
@@ -23,7 +23,7 @@ export const Form = () => {
     const newUserName = userNameInput || 'Anônimo'
     const newPlayerId = uuid()
     
-    const data = await updateRoom({ 
+    const data = await sendActionToServer({ 
       roomName: roomNameInput,
       userName: newUserName,
       playerId: newPlayerId,
