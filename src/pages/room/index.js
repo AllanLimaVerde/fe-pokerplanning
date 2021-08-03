@@ -54,15 +54,14 @@ const Room = () => {
     }
 
     if (isRevealTime && room && room.room && room.room.status === roomStatuses.waiting) {
-    setIsRevealTime(false)
-    setSelectedCard(null)
+      setIsRevealTime(false)
+      setSelectedCard(null)
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [room])
 
   useEffect(() => {
-    if (countdown < 1) {
+    if (countdown !== null && countdown < 1) {
       setCountdown(null)
       clearInterval(countdownInterval.current)
       countdownInterval.current = null
